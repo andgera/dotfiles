@@ -1,8 +1,6 @@
 # Set up the prompt
 
-autoload -Uz promptinit
-promptinit
-prompt adam1 black green
+PS1='%F{red}%n%F{green}@%m%k %B%F{blue}%(4~|...|)%3~%F{white} %# %b%f%k'
 
 setopt histignorealldups sharehistory
 
@@ -35,3 +33,8 @@ zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+manpath=($X11HOME/man $HOME/.man /usr/man /usr/lang/man /usr/local/man)
+export MANPATH
+
+
