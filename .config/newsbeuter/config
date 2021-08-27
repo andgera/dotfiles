@@ -1,0 +1,47 @@
+## Конфигурационный файл ~/.newsbeuter/config
+## Пн фев 20 11:46:17 MSK 2017
+
+always-display-description false
+article-sort-order desc
+articlelist-format "%4i %f %D %6L  %?T?|%-17T|  ?%t"
+auto-reload yes
+browser lynx
+bookmark-cmd "~/bin/bookmark-scuttle.sh"
+datetime-format "%a %d %b"
+feed-sort-order title-dec
+feedlist-format "%4i %n %11u %t"
+goto-first-unread yes
+goto-next-feed yes
+max-items 100
+prepopulate-query-feeds yes
+reload-time 30
+reload-threads 3
+search-highlight-colors black yellow bold
+show-keymap-hint yes
+show-read-feeds no
+show-read-articles no
+text-width 82
+ignore-article "*" "title =~ \"Sponsor\""
+ignore-article "*" "title =~ \"Advertisement\""
+ignore-mode "display"
+highlight feedlist    "^  *[0-9]+  *N  "                       color156 default
+highlight article    "https?://[^ ]+$"                         color75  default
+highlight articlelist "^  *[0-9]+  *N  "                       color156 default
+highlight article     "(^Лента:.*)"                            yellow   default bold
+highlight article     "(^Автор:.*)"                            color75  default
+highlight article     "(^Заголовок:.*)"                        color85  default
+highlight article     "(^Ссылка:.*)"                           color170 default
+highlight article     "(^Дата:.*)"                             color83  default
+highlight article     "^Ссылка загрузки подкаста:.*"           color71  default
+highlight article     "^Ссылки:"                               white    color240 underline
+highlight article     "\\[[0-9][0-9]*\\]"                      color72  default  bold
+highlight article     "\\[изображение [0-9][0-9]*\\]"          color72  default  bold
+highlight article     "\\[embedded flash: [0-9][0-9]*\\]"      color72  default  bold
+highlight article     ":.*\\(изображение\\)$"                  color74  default
+highlight article     ":.*\\(ссылка\\)$"                       color74  default
+highlight article     ":.*\\(embedded flash\\)$"               color74  default
+color listnormal                                               white    default
+color listfocus                                                default  color240
+color info                                                     default  color240
+
+# EOF

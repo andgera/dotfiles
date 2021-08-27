@@ -1,0 +1,65 @@
+#MPlayer
+           
+begin
+   prog = mplayer
+   button = KEY_MENU
+   config = osd_show_progression
+end
+                  
+begin
+   prog = mplayer
+   button = KEY_BACK 
+   config = seek -10
+   repeat = 1
+end
+                                 
+begin
+   prog = mplayer
+   button = KEY_FASTFORWARD
+   config = seek +10
+   repeat = 1
+end
+
+begin
+    prog = mplayer
+    button = KEY_PAUSE 
+    config = pause
+end
+
+begin
+    prog = mplayer
+    button = KEY_PLAY
+    config = pause
+end
+
+begin
+    prog = mplayer
+    button = KEY_STOP
+    config = quit 
+end
+                                    
+begin
+   prog = mplayer
+   button = KEY_VOLUMEUP
+   config = volume +1
+   repeat = 1
+end
+
+begin
+   prog = mplayer
+   button = KEY_VOLUMEDOWN
+   config = volume -1
+   repeat = 1
+end
+
+begin
+   prog= mplayer
+   button= KEY_MUTE
+   config= mute
+end
+
+begin
+   prog = mplayer
+   button = KEY_SELECT
+   config = vo_fullscreen
+end

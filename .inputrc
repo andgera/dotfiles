@@ -1,0 +1,35 @@
+
+set colored-stats on
+set completion-ignore-case off
+set completion-map-case on
+set echo-control-characters off
+set mark-symlinked-directories on
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+#set enable-bracketed-paste on
+
+set match-hidden-files off
+set page-completions off
+set completion-query-items 200
+set visible-stats on
+set skip-completed-text on
+set input-meta on
+set output-meta on
+set convert-meta off
+
+"\e[A":history-search-backward
+"\e[B":history-search-forward
+"\e[1~":beginning-of-line
+"\e[4~":end-of-line
+"\033[1;5D": forward-word
+"\033[1;5C": backward-word
+"\C-l": clear-screen
+"\C-c": abort
+
+#set editing-mode vi
+"\C-r": reverse-search-history
+"\C-s": forward-search-history
+#set show-mode-in-prompt on
+#set vi-ins-mode-string +
+#set vi-cmd-mode-string :

@@ -1,0 +1,3 @@
+begin mplayer
+    include "~/.lirc/mplayer"
+end mplayer
