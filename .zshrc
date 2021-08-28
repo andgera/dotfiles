@@ -37,4 +37,39 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 manpath=($X11HOME/man $HOME/.man /usr/man /usr/lang/man /usr/local/man)
 export MANPATH
 
+# My alias
+# shellcheck disable=SC2015 disable=SC2015
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto --format=long'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# shellcheck disable=SC1090 disable=SC1091
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# shellcheck disable=SC1090 disable=SC1091
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
+fi
+
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:/sbin:/usr/sbin:$PATH"
+fi
+
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
