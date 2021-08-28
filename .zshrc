@@ -36,6 +36,15 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 manpath=($X11HOME/man $HOME/.man /usr/man /usr/lang/man /usr/local/man)
 export MANPATH
+export HELPDIR=/usr/share/zsh/help
+autoload -Uz run-help
+export PAGER=most
+export USER_AGENT="Firefox/51.0 (Windows; U; Windows NT 5.1;ru-RU;rv:50.9.1.3) Gecko/51.0 Firefox/51.0 (.NET CLR 3.5.30729)"
+export EDITOR=vim
+export LYNX_CFG=~/.lynx/lynx.cfg
+export WWW_HOME=https://duckduckgo.com/
+
+
 
 # My alias
 # shellcheck disable=SC2015 disable=SC2015
@@ -59,10 +68,9 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # shellcheck disable=SC1090 disable=SC1091
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
+if [ -f "$HOME/.bash_functions" ]; then
+    . $HOME/.bash_functions
 fi
-
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
