@@ -1,8 +1,17 @@
+# start tmux
+case "$TERM" in
+	linux) tmux;;
+esac
+
 # Set up the prompt
 
 PS1='%F{red}%n%F{green}@%m%k %B%F{blue}%(4~|...|)%3~%F{white} %# %b%f%k'
 
 setopt histignorealldups sharehistory
+
+# Search path for the cd command
+cdpath=(.. ~ ~/tmp ~/git)
+
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
@@ -34,8 +43,14 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-manpath=($X11HOME/man $HOME/.man /usr/man /usr/lang/man /usr/local/man)
+# automatically remove duplicates from these arrays
+typeset -U path cdpath fpath manpath
+
+manpath=($HOME/.man /usr/share/man /usr/local/man /usr/local/share/man /usr/X11R6/man /opt/man)
 export MANPATH
+
+
+#export MANPATH=$HOME/.man:/usr/share/man:/usr/local/man:/usr/local/share/man:/usr/X11R6/man:/opt/man
 export HELPDIR=/usr/share/zsh/help
 autoload -Uz run-help
 export PAGER=most
@@ -74,7 +89,7 @@ fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:/sbin:/usr/sbin:$PATH"
+    PATH="$HOME/bin:/usr/games:/sbin:/usr/sbin:$PATH"
 fi
 
 if [ -d "$HOME/.local/bin" ] ; then
