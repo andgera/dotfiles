@@ -1,0 +1,28 @@
+# $Id$
+text/html;                  w3m -I %{charset} -dump %s; nametemplate=%s.html; copiousoutput
+#text/html;                  midori -a '%s'; test=test -n "$DISPLAY"; nametemplate=%s.html
+#text/html;                  lynx -force_html %s; needsterminal;
+#text/html;                  elinks -dump -eval 'set document.codepage.assume = "%{charset}"' %s; copiousoutput
+image/gif;                  feh %s; copiousoutput
+image/jpg;                  feh %s; copiousoutput
+image/jpeg;                 feh %s; copiousoutput
+image/png;                  feh %s; copiousoutput
+application/pgp-keys;       gpg --import --interactive --verbose;needsterminal
+#application/pgp-keys;       pgp -f < %s ; copiousoutput
+application/msword;         antiword %s; copiousoutput
+application/vnd.msword;     antiword %s; copiousoutput
+application/excel;          xls2csv %s; | sed 's/,/        /g'; copiousoutput
+application/msexcel;        xls2csv %s; | sed 's/,/        /g'; copiousoutput
+application/ms-Excel;       xls2csv %s | sed 's/,/        /g'; copiousoutput
+application/vnd.ms-excel;   xls2csv %s | sed 's/,/        /g'; copiousoutput
+application/x-excel;        xls2csv %s | sed 's/,/        /g'; copiousoutput
+application/msword;         antiword '%s'; copiousoutput; description=Word Document;nametemplate=%s.doc
+application/pdf;            pdftotext '%s' -; copiousoutput; description=PDF Document;nametemplate=%s.pdf
+application/x-gunzip;       gzcat; copiousoutput
+application/x-tar-gz;       gunzip -c %s | tar -tf - ; copiousoutput
+application/postscript;     ps2ascii %s; copiousoutput
+#application/vnd.openxmlformats-officedocument.wordprocessingml.document; libreoffice --writer %s; copiousoutput
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; docx2txt < %s; copiousoutput; description=Word Document;nametemplate=%s.docx
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; xlsx2csv %s; copiousoutput
+application/zip;            unzip -l %s; copiousoutput
+application/rtf;            catdoc %s; copiousoutput

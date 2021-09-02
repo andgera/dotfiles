@@ -1,0 +1,166 @@
+    source "gpg -dq $HOME/.mutt/accounts.gpg |"
+
+    folder-hook 'mail.ru' 'source ~/.mutt/mail'
+    folder-hook 'yandex.ru' 'source ~/.mutt/yandex'
+    folder-hook 'gmail.com' 'source ~/.mutt/gmail'
+
+    source '~/.mutt/mail'
+
+    account-hook mail.ru 'set imap_user = $my_mail_user imap_pass=$my_mail_pass'
+    account-hook yandex.ru 'set imap_user = $my_yandex_user imap_pass=$my_yandex_pass'
+    account-hook gmail.com 'set imap_user = $my_gmail_user imap_pass=$my_gmail_pass'
+
+    macro index <f2> '<change-folder>imaps://imap.mail.ru<enter>'
+    macro index <f3> '<change-folder>imaps://imap.yandex.ru<enter>'
+    macro index <f4> '<change-folder>imaps://imap.gmail.com<enter>'
+
+
+    set alias_file = "~/.mutt/mail_aliases"
+    set sort_alias = alias
+    set reverse_alias = yes
+    source $alias_file
+    set mailcap_path = ~/.mutt/mailcap
+
+set ssl_starttls = yes
+set ssl_force_tls = yes
+set ssl_use_sslv3 = no
+set ssl_use_tlsv1 = no
+set ssl_use_tlsv1_1 = no
+set ssl_use_tlsv1_2 = yes
+set ssl_verify_dates = yes
+set ssl_verify_host = yes
+set reverse_name = yes
+set reverse_realname = no
+set record = +sent-mail-`date +%Y`
+# кодировка отправляемых писем
+set send_charset = "utf-8"
+set assumed_charset = "iso-8859-1:utf-8"
+set allow_8bit = yes
+set copy = yes
+set move = yes
+set delete = yes
+set edit_hdrs
+set mail_check = 90
+set timeout = 15
+set imap_check_subscribed
+unset imap_passive
+set imap_keepalive = 300
+set mail_check = 120
+set tilde
+set arrow_cursor
+set menu_scroll = yes
+set nomark_old
+set mime_forward
+set implicit_autoview = yes
+set mailcap_path = "~/.mutt/mailcap"
+alternative_order text/plain text/enriched text/html *
+auto_view text/html
+auto_view application/msword
+auto_view application/pdf
+auto_view application/pgp-signature
+
+# симулировать старое url меню
+macro index cb |urlview\n "Перейти по url "
+macro pager cb |urlview\n "Перейти по url "
+macro index ub |urlscan\n "Перейти по url "
+macro pager ub |urlscan\n "Перейти по url "
+
+# This should be ' »›-‹L' to match Gmail, but $to_chars breaks on unicode.
+set to_chars = ' +>-<L'
+# Шаблон по умолчанию для поиска в To, Cc и Subject
+set simple_search = "~f %s | ~C %s | ~s %s"
+# Показываем очки спама (только из SpamAssassin) при чтении сообщения
+spam "X-Spam-Score: ([0-9\\.]+).*" "SA: %1"
+set pager_format = " %C - %[%H:%M] %.20v, %s%* %?H? [%H] ?"
+# в ответное письмо всегда включаем исходное
+set include = yes
+# Не перемещаться на следующее сообщение, когда текущее просмотрено до конца
+set pager_stop = yes
+# показывать оглавление в окне чтения почты
+set pager_context = 1
+set pager_index_lines = 10
+set menu_scroll
+# сортировка писем при просмотре
+#сортировать сообщения по заголовкам
+set sort = threads
+set sort_aux = reverse-last-date-received
+set sort_browser = reverse-date
+set auto_tag
+# чтобы аттачи не были в виде "Вложение #1: =?Windows-1251?B?q7uru7fLw7uv8LmRvYw==?="
+set rfc2047_parameters = yes
+# запрос перед печатью файла
+set print = ask-yes
+# команда печати
+set print_command = "muttprint -P A4 -C lpr -x -a /Date/_To_From_*/Subject/* "
+#set print_command = "lpr"
+#set print_command = "muttprint -P letter -C lpr -x -F helvetica -a /Date/_To_From_X-Mailer_*/Subject/* "
+#set print_command = "muttprint -P A4 -p TO_FILE:/tmp/$USER.ps && okular /tmp/$USER.ps"
+
+
+# Если есть reply-to используем
+set reply_to
+set abort_nosubject = no
+alternates '(andrey|admin|andger|andgera)([-+].*)?@.*'
+set hdr_format = "%4C %Z %{%d/%m/%y} %-15.15F (%4c) %s" # format of the index
+# редактор, вызываемый по ~v
+set visual = vim
+# вставка подписи
+set signature = "~/bin/message |"
+# давать звук при приходе новой почты
+set beep_new = yes
+unset collapse_unread
+# Укажем порядок представления заголовков писем:
+# укажем порядок следования заголовков
+unhdr_order *
+hdr_order From: Organization: X-PGP-Key: Date: User-Agent: X-Mailer To: Cc: Reply-To: Subject:
+ignore *
+unignore From: Organization: X-PGP-Key: Date: User-Agent: X-Mailer To: Cc: Reply-To: Subject:
+my_hdr Reply-To:
+my_hdr X-No-Archive: Yes
+
+set ispell = "aspell -c"
+### Настройка цвета
+color header     brightmagenta default "(^From:.*|^Organization:.*|^X-PGP-Key:.*|^To:.*|^Cc:.*|^Bcc:.*|^Date:.*)"
+color header     color74       default  "(^Subject:.*)"
+color body       brightyellow  default  " [;:]-*[})>{(<|]" 
+color body       color74       default  "(http|https|ftp|news)://[^ \"\t\r\n]*"
+color body       color74       default  "[-a-z_0-9.]+@[-a-z_0-9.]+"
+color body       color74       default  "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+color body       cyan          default  "(^|[[:space:][:punct:]])\\*[^*]+\\*([[:space:][:punct:]]|$)"
+color body       cyan          default  "(^|[[:space:][:punct:]])_[^_]+_([[:space:][:punct:]]|$)"
+source "~/.mutt/mutt-colors-solarized-dark-16.muttrc"
+# Установим формат даты
+set date_format = "%d %B %Y, %A  %I:%M:%S %Z"
+# при ответе на письмо пишем эту строчку в начале цитаты
+set attribution = "'%F' (%a) в сообщении от '%D', писал(а):"
+
+# адресная книга
+# вызов адресной книги по ^T
+set query_command = "abook --mutt-query '%s'"
+macro generic,index,pager ca "<shell-escape>abook<return>" "Запустить abook"
+macro index,pager A "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --add-email-quiet<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>" "Добавить адрес отправителя в abook"
+# PGP
+# проверяем сигнатуры PGP
+set pgp_verify_sig = yes
+set pgp_use_gpg_agent = yes
+#set pgp_sign_as = 71955D0A
+set pgp_timeout = 3600
+set crypt_autosign = yes
+set crypt_replyencrypt = yes
+set crypt_replysign = yes
+source ~/.mutt/gpg.rc
+set pgp_good_sign = "^gpg: Хорошая подпись"
+#set crypt_autoencrypt = yes
+set crypt_replysignencrypted = yes
+set crypt_verify_sig = yes
+set crypt_timestamp = yes
+set crypt_use_gpgme = no
+# показывать помошь
+set help
+set autoedit
+set editor ="vim -c 'set syntax=mail ft=mail enc=utf-8 spell spelllang=ru_ru'"
+send-hook . 'set realname = "Andrey G-w"'
+## hack to make  $reverse_name and 'my_hdr From:' work ok (eg mlists)
+send-hook . 'unmy_hdr From:'
+
+
