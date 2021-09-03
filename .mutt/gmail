@@ -11,7 +11,6 @@ set smtp_url = 'smtp://'$my_gmail_user'@smtp.gmail.com:587/'
 set smtp_pass = $my_gmail_pass
 
 set folder = "imaps://imap.gmail.com:993"
-set record = "+[Gmail]/Отправленные"
 set postponed = "+[Gmail]/Черновики"
 set trash = "+[Gmail]/Корзина"
 set header_cache = "~/.mutt/cache/gmail/headers"
