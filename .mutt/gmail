@@ -10,7 +10,10 @@ set spoolfile = imaps://imap.gmail.com:993/INBOX
 set smtp_url = 'smtp://'$my_gmail_user'@smtp.gmail.com:587/'
 set smtp_pass = $my_gmail_pass
 
+set delete    = yes
 set folder = "imaps://imap.gmail.com:993"
+set record = '+[Gmail]/Отправленные'
+set trash = '+[Gmail]/Корзина'
 set postponed = "+[Gmail]/Черновики"
 set header_cache = "~/.mutt/cache/gmail/headers"
 set message_cachedir = "~/.mutt/cache/gmail/bodies"
@@ -21,27 +24,27 @@ set hostname = gmail.com
 # Gmail style keybindings
  bind  editor <space> noop
  bind index,pager g noop
- macro index,pager gy "<save-message>=[Gmail]/Вся почта<enter><enter>" "Переместить в 'Вся почта'"
- macro index,pager + "<save-message>=[Gmail]/Важное<enter><enter>" "Пометить как Важное"
- macro index,pager ! "<save-message>=[Gmail]/Спам<enter><enter>" "Пометить как Спам"
+ macro index,pager gy "<save-message>+[Gmail]/Вся почта<enter><enter>" "Переместить в 'Вся почта'"
+ macro index,pager + "<save-message>+[Gmail]/Важное<enter><enter>" "Пометить как Важное"
+ macro index,pager ! "<save-message>+[Gmail]/Спам<enter><enter>" "Пометить как Спам"
  macro index,pager U <set-flag>O "Mark as read"
  macro index,pager I <clear-flag>O "Mark as unread"
  macro index,pager T <set-flag>!  "Mark as read"
  macro index,pager E <clear-flag>! "Mark as unread"
- macro index,pager ga "<change-folder>=[Gmail]/Вся почта<enter>" "Перейти в папку 'Вся почта'"
- macro index,pager gm "<change-folder>=[Gmail]/Помеченные<enter>" "Перейти в 'Помеченые'"
- macro index,pager gd "<change-folder>=[Gmail]/Черновики<enter>" "Перейти в 'Черновики'"
- macro index,pager gs "<change-folder>=[Gmail]/Спам<enter>" "Перейти в 'Спам'"
- macro index,pager gk "<change-folder>=[Gmail]/Корзина<enter>" "Перейти в 'Корзина'"
+ macro index,pager ga "<change-folder>+[Gmail]/Вся почта<enter>" "Перейти в папку 'Вся почта'"
+ macro index,pager gm "<change-folder>+[Gmail]/Помеченные<enter>" "Перейти в 'Помеченые'"
+ macro index,pager gd "<change-folder>+[Gmail]/Черновики<enter>" "Перейти в 'Черновики'"
+ macro index,pager gs "<change-folder>+[Gmail]/Спам<enter>" "Перейти в 'Спам'"
+ macro index,pager gk "<change-folder>+[Gmail]/Корзина<enter>" "Перейти в 'Корзина'"
  macro index,pager gl <change-folder>? "Перейти в 'Label'"
- macro index,pager gi "<change-folder>=INBOX<enter>" "Перейти в inbox"
- macro index,pager gt "<change-folder>=[Gmail]/Отправленные<enter>" "Перейти в 'Отправленные'"
- folder-hook =INBOX 'macro index,pager gc "<save-message>=[Gmail]/Вся почта<enter><enter>"  "Archive conversation"'
- folder-hook =[Gmail]/Корзина macro index,pager gc "<save-message>=INBOX<enter><enter>" "Move to inbox"
- folder-hook =[Gmail]/Помеченые bind  index,pager gc flag-message #"Toggle star"
+ macro index,pager gi "<change-folder>+INBOX<enter>" "Перейти в inbox"
+ macro index,pager gt "<change-folder>+[Gmail]/Отправленные<enter>" "Перейти в 'Отправленные'"
+ folder-hook +INBOX 'macro index,pager gc "<save-message>+[Gmail]/Вся почта<enter><enter>"  "Archive conversation"'
+ folder-hook +[Gmail]/Корзина macro index,pager gc "<save-message>+INBOX<enter><enter>" "Move to inbox"
+ folder-hook +[Gmail]/Помеченые bind  index,pager gc flag-message #"Toggle star"
  unset confirmappend
- folder-hook . set trash="=[Gmail]/Корзина"
- folder-hook "=[Gmail]/Корзина" unset trash
+ folder-hook .      set trash="+[Gmail]/Корзина"
+ folder-hook trash$ unset trash
 
 # PGP
 set pgp_sign_as = 0x71955D0A
