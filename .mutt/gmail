@@ -12,7 +12,6 @@ set smtp_pass = $my_gmail_pass
 
 set folder = "imaps://imap.gmail.com:993"
 set postponed = "+[Gmail]/Черновики"
-set trash = "+[Gmail]/Корзина"
 set header_cache = "~/.mutt/cache/gmail/headers"
 set message_cachedir = "~/.mutt/cache/gmail/bodies"
 set certificate_file = "~/.mutt/cert/certificates"
@@ -37,10 +36,12 @@ set hostname = gmail.com
  macro index,pager gl <change-folder>? "Перейти в 'Label'"
  macro index,pager gi "<change-folder>=INBOX<enter>" "Перейти в inbox"
  macro index,pager gt "<change-folder>=[Gmail]/Отправленные<enter>" "Перейти в 'Отправленные'"
- folder-hook +INBOX 'macro index,pager gc "<save-message>=[Gmail]/Вся почта<enter><enter>"  "Archive conversation"'
- folder-hook +[Gmail]/Корзина macro index,pager gc "<save-message>=INBOX<enter><enter>" "Move to inbox"
- folder-hook +[Gmail]/Помеченые bind  index,pager gc flag-message #"Toggle star"
-
+ folder-hook =INBOX 'macro index,pager gc "<save-message>=[Gmail]/Вся почта<enter><enter>"  "Archive conversation"'
+ folder-hook =[Gmail]/Корзина macro index,pager gc "<save-message>=INBOX<enter><enter>" "Move to inbox"
+ folder-hook =[Gmail]/Помеченые bind  index,pager gc flag-message #"Toggle star"
+ unset confirmappend
+ folder-hook . set trash="=[Gmail]/Корзина"
+ folder-hook "=[Gmail]/Корзина" unset trash
 
 # PGP
 set pgp_sign_as = 0x71955D0A

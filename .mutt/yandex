@@ -17,6 +17,10 @@ set message_cachedir = "~/.mutt/cache/yandex/bodies"
 set certificate_file = "~/.mutt/cert/certificates"
 set hostname = yandex.ru
 
+unset confirmappend
+folder-hook . set trash="=Trash"
+folder-hook "=Trash" unset trash
+
 # PGP
 set pgp_sign_as = 0x2B541204
 
