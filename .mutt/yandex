@@ -1,33 +1,33 @@
-set imap_check_subscribed
-unset imap_passive
-set imap_keepalive = 900
-set mail_check     = 1800
-set realname  = $my_name
-set from      = $my_yandex_user
-set smtp_url  = 'smtps://'$my_yandex_user'@smtp.yandex.ru:465/'
-set smtp_pass = $my_yandex_pass
+### yandex
 
-set delete    = yes
-set folder    = 'imaps://imap.yandex.ru:993'
-set spoolfile = '+INBOX'
-set postponed = '+Черновики'
-set record    = '+Отправленные'
-set trash     = '+Trash'
-set header_cache = "~/.mutt/cache/yandex/headers"
-set message_cachedir = "~/.mutt/cache/yandex/bodies"
-set certificate_file = "~/.mutt/cert/certificates"
-set hostname = yandex.ru
+    # GENERAL OPTIONS
+    set header_cache     = ~/.mutt/yandex.ru/cache/headers
+    set message_cachedir = ~/.mutt/yandex.ru/cache/bodies
 
-unset confirmappend
-folder-hook .        set trash="=Trash"
-folder-hook trash$ unset trash
+    # RECEIVE OPTIONS
+    set imap_check_subscribed
+    unset imap_passive
+    set imap_keepalive = 900
+    set mail_check     = 1800
 
+    # REMOTE YANDEX FOLDERS
+    set folder    = 'imaps://imap.yandex.ru:993'
+    set spoolfile = '+INBOX'
+    set postponed = '+Черновики'
+    set record    = '+Отправленные'
 
-# PGP
-set pgp_sign_as = 0x2B541204
+    # SEND OPTIONS
+    set ssl_starttls  = yes
+    set ssl_force_tls = yes
+    set realname      = $my_name
+    set from          = $my_yandex_user
+    set smtp_url      = 'smtps://'$my_yandex_user'@smtp.yandex.ru:465/'
+    set smtp_pass     = $my_yandex_pass
 
-send-hook . 'set from = $my_gmail_user'
-my_hdr X-PGP-Key: https://keyserver.ubuntu.com/pks/lookup?op=vindex&search=admin%40vniizbk.ru
+    # PGP
+    set pgp_sign_as = 0x2B541204
 
+    send-hook . 'set from = $my_gmail_user'
+    my_hdr X-PGP-Key: https://keyserver.ubuntu.com/pks/lookup?op=vindex&search=admin%40vniizbk.ru
 
 # vim: ft=muttrc
