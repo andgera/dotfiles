@@ -96,6 +96,8 @@ set print_command = "muttprint -P A4 -C lpr -x -a /Date/_To_From_*/Subject/* "
 #set print_command = "muttprint -P letter -C lpr -x -F helvetica -a /Date/_To_From_X-Mailer_*/Subject/* "
 #set print_command = "muttprint -P A4 -p TO_FILE:/tmp/$USER.ps && okular /tmp/$USER.ps"
 
+# Перенос
+set wrap = 90
 
 # Если есть reply-to используем
 set reply_to
@@ -119,16 +121,9 @@ my_hdr Reply-To:
 my_hdr X-No-Archive: Yes
 
 set ispell = "aspell -c"
-### Настройка цвета
-color header     brightmagenta default "(^From:.*|^Organization:.*|^X-PGP-Key:.*|^To:.*|^Cc:.*|^Bcc:.*|^Date:.*)"
-color header     color74       default  "(^Subject:.*)"
-color body       brightyellow  default  " [;:]-*[})>{(<|]" 
-color body       color74       default  "(http|https|ftp|news)://[^ \"\t\r\n]*"
-color body       color74       default  "[-a-z_0-9.]+@[-a-z_0-9.]+"
-color body       color74       default  "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
-color body       cyan          default  "(^|[[:space:][:punct:]])\\*[^*]+\\*([[:space:][:punct:]]|$)"
-color body       cyan          default  "(^|[[:space:][:punct:]])_[^_]+_([[:space:][:punct:]]|$)"
-source "~/.mutt/mutt-colors-solarized-dark-16.muttrc"
+
+source "~/.mutt/mutt-colors"
+
 # Установим формат даты
 set date_format = "%d %B %Y, %A  %I:%M:%S %Z"
 # при ответе на письмо пишем эту строчку в начале цитаты
@@ -143,7 +138,6 @@ macro index,pager A "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode
 # проверяем сигнатуры PGP
 set pgp_verify_sig = yes
 set pgp_use_gpg_agent = yes
-#set pgp_sign_as = 71955D0A
 set pgp_timeout = 3600
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
