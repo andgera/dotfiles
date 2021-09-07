@@ -93,29 +93,25 @@ if [ -f "$HOME/.bash_aliases" ]; then
     . $HOME/.bash_aliases
 fi
 
-if [ -f "$HOME/.functions" ]; then
+if [ -f "$HOME/.bash_functions" ]; then
     . $HOME/.bash_functions
 fi
 
-
 # enable color support of ls and also add handy aliases
-if [ "$TERM" != "dumb" ] && [ -x /usr/bin/dircolors ]; then
-    eval "$(dircolors -b)"
-    alias ls='ls -F -h --color=auto'
-    alias dir='ls --color=auto --format=vertical'
-    alias vdir='ls --color=auto --format=long'
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 export PS1='\[\033[01;35m\] ▶ $(($(echo $TMUX_PANE | sed s/%//g)+1)) \[\033[01;31m\]\u\[\033[01;32m\]@\h\[\033[01;34m\] \W \$\[\033[00m\] '
 export PS2='\[\e[0;1m\]\[\e[33;1m\] ∥── contune └──┤▶ \[\e[0;1m\]\[\033[0m\] '
 
@@ -137,3 +133,14 @@ export PAGER=/usr/bin/less
 #set -o vi
 #bind "\C-o":operate-and-get-next
 export MANPATH=$HOME/.man:/usr/share/man:/usr/local/man:/usr/local/share/man:/usr/X11R6/man:/opt/man
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
