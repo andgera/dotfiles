@@ -116,5 +116,5 @@ color body          blue            default         "( *[-+=#*~_]){6,}"
 
 folder-hook mail.ru             "color status        default         red             "
 folder-hook gmail.com           "color status        white           blue            "
-folder-hook yandex.ru           "color status        black           green           "
+folder-hook yandex.ru           "color status        black           brightcyan      "
 
