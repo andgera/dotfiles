@@ -115,6 +115,6 @@ mono  body          bold                            "^gpg: BAD signature from.*"
 color body          blue            default         "( *[-+=#*~_]){6,}"
 
 folder-hook mail.ru             "color status        default         red             "
-folder-hook gmail.com           "color status        white           blue            "
-folder-hook yandex.ru           "color status        black           brightcyan      "
+folder-hook gmail.com           "color status        default         blue            "
+folder-hook yandex.ru           "color status        default         brightcyan      "
 
