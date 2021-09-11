@@ -89,10 +89,12 @@ xterm*|rxvt*)
     ;;
 esac
 
+# shellcheck disable=SC2086,SC1090
 if [ -f "$HOME/.bash_aliases" ]; then
     . $HOME/.bash_aliases
 fi
 
+# shellcheck disable=SC2086,SC1090
 if [ -f "$HOME/.bash_functions" ]; then
     . $HOME/.bash_functions
 fi

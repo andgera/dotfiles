@@ -12,6 +12,9 @@ setopt histignorealldups sharehistory
 # Search path for the cd command
 cdpath=(.. ~ ~/tmp ~/git)
 
+# Add color comands and etc ...
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
@@ -30,7 +33,6 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -95,4 +97,3 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-
