@@ -4,7 +4,7 @@
 " $ vim-addons disable latex-suite # отключаем расширение latex-suite
 " $ vim-addons remove latex-suite # удаляем расширение latex-suite (из ~/.vim)
 
-colorscheme adaryn
+colorscheme koehler
 
 " Определять тип файла
 filetype plugin indent on
@@ -107,7 +107,7 @@ function! MyKeyMapHighlight()
  call MyKeyMapHighlight() " при старте Vim устанавливать цвет статусной строки
  autocmd WinEnter * :call MyKeyMapHighlight() " при смене окна обновлять информацию о раскладках
 
- " использовать Ctrl+F для переключения раскладок
+ " использовать Ctrl-F для переключения раскладок
  cmap <silent> <C-F> <C-^>
  imap <silent> <C-F> <C-^>X<Esc>:call MyKeyMapHighlight()<CR>a<C-H>
  nmap <silent> <C-F> a<C-^><Esc>:call MyKeyMapHighlight()<CR>
@@ -148,8 +148,18 @@ set pastetoggle=<F7>
 "Подсветка текущей строки
 " set cursorline
 
-" Сохранение
-map <F2> :w<CR>
+" Перевод
+function! TranslateWord()
+  let s:dict    = "trans en:ru -no-ansi"
+  let s:phrase  = expand("<cword>")
+  let s:tmpfile = tempname()
+  silent execute "!" . s:dict . " " . s:phrase . " > " . s:tmpfile
+  execute "botright sp " . s:tmpfile
+  g/^\s*$/de
+  normal ggVG<.dd.J
+endfunction
+
+map <F2> :call TranslateWord()<CR>
 
 " Выход
 map <C-F6> :q<CR>
@@ -208,6 +218,10 @@ set t_vb=
 " Поддержка мыши
 set mouse=a
 set mousemodel=popup
+
+if &term =~ "^tmux"
+        set ttymouse=sgr
+endif
 
 " Кодировка текста по умолчанию
 set termencoding=utf-8
