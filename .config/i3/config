@@ -27,6 +27,8 @@ exec --no-startup-id xscreensaver-command -deactivate >&- 2>&- &
 exec --no-startup-id nextcloud
 
 # Отключение заголовков окон
+bindsym $mod+t border toggle
+
 default_border pixel
 
 default_floating_border normal

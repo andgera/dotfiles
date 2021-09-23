@@ -12,6 +12,33 @@ setopt histignorealldups sharehistory
 # Search path for the cd command
 cdpath=(.. ~ ~/tmp ~/git)
 
+# Auto cd
+setopt autocd
+
+# Globing
+setopt extendedglob
+
+# C-R history
+bindkey '^R' history-incremental-search-backward
+
+bindkey "^[OB" down-line-or-search
+bindkey "OA" up-line-or-search
+bindkey "^[OC" forward-char
+bindkey "^[OD" backward-char
+bindkey "^[OF" end-of-line
+bindkey "^[OH" beginning-of-line
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[3~" delete-char
+bindkey "^[[4~" end-of-line
+bindkey "^[[5~" up-line-or-history
+bindkey "^[[6~" down-line-or-history
+bindkey "^?" backward-delete-char
+
+
+
+# Automatic Typo Correction
+setopt correctall
+
 # Add color comands and etc ...
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
@@ -28,16 +55,20 @@ HISTFILE=~/.zsh_history
 autoload -Uz compinit
 compinit
 
+#
+setopt menucomplete
+zstyle ':completion:*' menu select=1 _complete _ignored _approximate
+
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
+#zstyle ':completion:*' menu select=2
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
+#zstyle ':completion:*' menu select=long
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
@@ -91,7 +122,7 @@ fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:/usr/games:/sbin:/usr/sbin:$PATH"
+    PATH=":.:$HOME/bin:/usr/games:/sbin:/usr/sbin:$PATH"
 fi
 
 if [ -d "$HOME/.local/bin" ] ; then
