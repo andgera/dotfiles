@@ -20,6 +20,7 @@ setopt extendedglob
 
 # C-R history
 bindkey '^R' history-incremental-search-backward
+bindkey '^F' history-incremental-search-forward
 
 bindkey "^[OB" down-line-or-search
 bindkey "OA" up-line-or-search
