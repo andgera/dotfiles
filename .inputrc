@@ -1,4 +1,4 @@
-
+set colored-completion-prefix on
 set colored-stats on
 set completion-ignore-case off
 set completion-map-case on

@@ -1,3 +1,7 @@
+# Disable stops all output to the terminal Ctrl+S
+stty ixany
+stty ixoff -ixon
+
 case $- in
     *i*) ;;
       *) return;;

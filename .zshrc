@@ -3,6 +3,12 @@ case "$TERM" in
 	linux) tmux;;
 esac
 
+# Disable stops all output to the terminal Ctrl+S
+stty ixany
+stty ixoff -ixon
+
+
+
 # Set up the prompt
 
 PS1='%F{red}%n%F{green}@%m%k %B%F{blue}%(4~|...|)%3~%F{white} %# %b%f%k'
@@ -20,7 +26,7 @@ setopt extendedglob
 
 # C-R history
 bindkey '^R' history-incremental-search-backward
-bindkey '^F' history-incremental-search-forward
+bindkey '^S' history-incremental-search-forward
 
 bindkey "^[OB" down-line-or-search
 bindkey "OA" up-line-or-search
