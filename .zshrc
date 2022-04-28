@@ -41,10 +41,25 @@ bindkey "^[[4~" end-of-line
 bindkey "^[[5~" up-line-or-history
 bindkey "^[[6~" down-line-or-history
 bindkey "^?" backward-delete-char
-
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '' edit-command-line
+
+### Automatically open images:
+ if which feh >/dev/null; then
+    alias -s {jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF}="feh -FZd"
+fi
+# ### Automatically open movies:
+if which mpv >/dev/null; then
+alias -s {mpg,mpeg,avi,ogm,wmv,m4v,mp4,mov,3GP}="mpv"
+fi
+### Automatically open other known files:
+which mupdf >/dev/null && alias -s pdf="mupdf"
+which mupdf >/dev/null && alias -s ps="mupdf"
+ 
 # Automatic Typo Correction
 setopt correctall
 
