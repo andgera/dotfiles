@@ -11,7 +11,8 @@ stty ixoff -ixon
 
 # Set up the prompt
 
-PS1='%F{red}%n%F{green}@%m%k %B%F{blue}%(4~|...|)%3~%F{white} %# %b%f%k'
+#PS1='%F{red}%n%F{green}@%m%k %B%F{blue}%(4~|...|)%3~%F{white} %# %b%f%k'
+PS1='%F{yellow}job:%F{magenta}%j %F{green}%m%F{blue}@ %k%B%F{cyan}%(4~|...|)%3~%F{white} %# %b%f%k'
 
 setopt histignorealldups sharehistory
 
