@@ -1,0 +1,439 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+#font pango:Terminus 12px
+font pango:Terminus, Icons 9
+exec --no-startup-id ~/.config/i3/i3temp.sh
+exec --no-startup-id compton -f --vsync drm
+#exec conky
+exec --no-startup-id nm-applet
+exec --no-startup-id qlipper
+exec --no-startup-id volumeicon
+#exec --no-startup-id pnmixer
+exec --no-startup-id feh --bg-fill feh --randomize --bg-fill ~/data/Foto/wallpaper/*.jpg
+exec --no-startup-id xscreensaver-command -deactivate >&- 2>&- &
+#exec --no-startup-id nextcloud
+
+# Отключение заголовков окон
+bindsym $mod+t border toggle
+
+default_border pixel
+
+default_floating_border normal
+
+# Убить окно нажав средней кнопкой мыши на титульный заголовок окна
+bindsym --release button2 kill
+
+# Для увеличение толщины рамки, чтобы было лучше видно активное окно
+for_window [tiling] border pixel 3
+
+# General window options
+# cssh and ctel windows should float
+for_window [title="CSSH"] floating enable
+for_window [title="CTEL"] floating enable
+
+
+# Включение окон которые запускаются в плавающем окне
+# Для получения значений class и instance окна использую утилиту xprop:
+# xprop | grep "WM_CLASS(STRING)"
+for_window [class="^Thunar$"] floating enable
+for_window [class="XCalc$"] floating enable border 1pixel resize 640 480
+for_window [class="^Gvim$" instance="^gvim$"] floating enable
+for_window [class="vlc"] floating enable
+for_window [class="VirtualBox"] floating enable
+for_window [class="Gimp"] floating enable
+for_window [class="mpv"] floating enable
+for_window [class="Gpicview"] floating enable
+for_window [class="Xfce4-terminal"] floating enable
+for_window [class="Xfce4-appfinder"] floating enable
+for_window [class="freeLib"] floating enable
+for_window [class="MuPDF"] floating enable
+for_window [class="Evince"] floating enable
+for_window [class="luajit"] floating enable
+for_window [class="Sxiv"] floating enable
+for_window [class="KeePassXC"] floating enable
+for_window [class="Firefox"] floating enable
+for_window [class="palemoon"] floating enable
+for_window [class="Pcmanfm"] floating enable
+for_window [class="Fbreader"] floating enable
+for_window [class="Tor Browser"] floating enable
+for_window [class="qBittorrent"] floating enable
+for_window [class="feh"] floating enable
+for_window [class="mpv"] floating enable
+for_window [class="QTScrobbler"] floating enable
+for_window [class="Zathura"] floating enable
+for_window [class="blastem"] floating enable
+for_window [class="FBReader"] floating enable
+for_window [class="URxvt"] border none
+
+### Cпрятать окно, чтобы оно не мешалось, но в то же время было всегда под рукой.
+### Можно добавить несколько окон и переключаться между ними.
+bindsym $mod+Shift+Tab move scratchpad
+
+# switching window with win+tab
+#bindsym $mod+Tab exec --no-startup-id rofi -modi drun -show window -lines 12 -padding 18 -width 60 -location 0 -columns 3 -font 'Noto Sans 12' -theme /usr/share/rofi/themes/arthur.rasi
+bindsym $mod+Tab exec --no-startup-id rofi -modi drun -show window -lines 12 -padding 18 -width 60 -location 0 -columns 3 -font 'Noto Sans 12' -theme /usr/share/rofi/themes/arthur.rasi
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up k
+set $down j
+set $left h
+set $right l
+#set $right semicolon
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec --no-startup-id /usr/bin/urxvt
+bindsym $mod+Shift+t exec --no-startup-id xterm -e /usr/bin/tmux att
+bindsym $mod+Shift+y exec --no-startup-id xterm
+
+# Убить окно с фокусом
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+#bindsym $mod+d exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+
+# Запуск команды выполнить
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -fn 'Terminus-11' -nb '#212121' -sb '#2B83A6' -sf '#FFFFFF'"
+bindsym $mod+d exec --no-startup-id rofi -modi drun -show drun -lines 12 -padding 18 -width 60 -location 0 -columns 3 -font 'Noto Sans 12' -theme /usr/share/rofi/themes/arthur.rasi
+
+# Запуск блокировки экрана
+bindsym Control+$mod+l exec --no-startup-id i3lock -c '000000'
+exec --no-startup-id xautolock -time 10 -locker "i3lock-fancy -f Source-Sans-Pro"
+
+# Создать скриншот
+#bindsym $mod+Shift+p exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Documents/Foto/screen/'
+bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/'
+bindsym Control+$mod+5 exec $HOME/bin/translate.sh
+
+bindsym $mod+Shift+f exec firefox-esr
+#bindsym $mod+Shift+f exec palemoon
+# start pcmanfm
+bindsym $mod+x exec pcmanfm
+
+
+# Выбор окна
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Перемещение выброного окна
+# между мониторами
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Разделить по горизонтали
+bindsym $mod+y split h
+
+# Разделить по вертикали
+bindsym $mod+v split v
+
+# Окно на весь экран
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+
+# Move the current workspace to the next output
+# (effectively toggles when you only have two outputs)
+#bindsym $mod+Shift+v move workspace to output right
+bindsym $mod+Shift+v move workspace to output left
+
+bindsym $mod+Control+j workspace prev
+bindsym $mod+Control+k workspace next
+
+bindsym $mod+Control+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+
+# Put this window on the presentation output.
+bindsym $mod+Shift+b move container to output VGA-0
+
+# Put this window on the primary output.
+bindsym $mod+Shift+n move container to output primary
+
+# define names for workspaces
+set $ws1   " 1: ❋  > _ "
+set $ws2   " 2: ❋  Media "
+set $ws3   " 3: ❋  WWW "
+set $ws4   " 4: ❋  Files "
+set $ws5   " 5: ❋  Documents "
+set $ws6   " 6: ❋  Code "
+set $ws7   " 7: ❋  Design "
+set $ws8   " 8: ❋  Chat "
+set $ws9   " 9: ❋  General "
+set $ws10  " 10: ❋  Settings "
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# assign program to workspace
+assign [class="terminal"]           → $ws1
+assign [class="MPlayer"]            → $ws2
+assign [class="FBReader"]           → $ws2
+assign [class="Audacious"]          → $ws2
+assign [class="Firefox-esr"]        → $ws3
+assign [class="Pale moon"]          → $ws3
+#assign [class="Tor Browser"]        → $ws3
+#assign [class="feh"]                → $ws3
+#assign [class="Thunar"]             → $ws4
+#assign [class="Evince"]             → $ws5
+#assign [class="MuPDF"]              → $ws5
+assign [class="LibreOffice$"]       → $ws5
+#assign [class="freeLib"]            → $ws5
+assign [class="(?i)libreoffice-startcenter"]  → $ws5
+assign [class="(?i)soffice"]        → $ws5
+assign [class="(?i)libreoffice"]    → $ws5
+assign [class="luajit"]             → $ws5
+#assign [class="vlc"]                → $ws6
+assign [class="Gimp"]               → $ws7
+assign [class="Inkscape"]           → $ws7
+assign [class="Gthumb"]             → $ws7
+assign [class="Hexchat"]            → $ws8
+assign [class="Skype"]              → $ws8
+assign [class="Upwork"]             → $ws8
+assign [class="Galculator"]         → $ws9
+assign [class="Gnome-font-viewer"]  → $ws9
+assign [class="Go-for-it"]          → $ws9
+assign [class="Keepassx"]           → $ws9
+assign [class="Lxtask"]             → $ws9
+assign [class="Transmission-gtk"]   → $ws9
+assign [class="Bum"]                → $ws10
+assign [class="Bleachbit"]          → $ws10
+assign [class="Dconf-editor"]       → $ws10
+assign [class="Gnome-disks"]        → $ws10
+assign [class="GParted"]            → $ws10
+assign [class="Grub-customizer"]    → $ws10
+assign [class="Hardinfo"]           → $ws10
+assign [class="Lxappearance"]       → $ws10
+assign [class="Lxinput"]            → $ws10
+assign [class="Lxrandr"]            → $ws10
+assign [class="Menu"]               → $ws10
+assign [class="Obconf"]             → $ws10
+assign [class="Lightdm-gtk-greeter-settings"]   → $ws10
+assign [class="Software-properties-gtk"]        → $ws10
+
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exit
+
+# Sound
+bindsym $mod+Ctrl+7 exec "amixer -D default set Master  '3%+'"
+bindsym $mod+Ctrl+6 exec "amixer -D default set Master  '1%-'"
+bindsym $mod+Shift+m exec "amixer -D default set  Master  toggle"
+
+#===volume control===
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -c 0 -q set Master 2dB+ unmute
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -c 0 -q set Master 2dB- unmute
+bindsym XF86AudioMute exec --no-startup-id amixer -q set Master toggle
+
+# Brightness
+#bindsym XF86MonBrightnessDown exec "xbacklight - 10"
+#bindsym XF86MonBrightnessUp   exec "xbacklight + 10"
+
+# Display
+bindsym XF86Display exec "arandr"
+
+# Touchpad
+bindsym XF86TouchpadToggle exec "synclient TouchpadOff=$(synclient | awk '/TouchpadOff/ {print ($3+1)%2}')"
+
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Resize windows instantly
+# Изменение размера окон на лету
+bindsym $mod+Ctrl+Left resize shrink width 10 px or 5 ppt
+bindsym $mod+Ctrl+Down resize grow height 10 px or 5 ppt
+bindsym $mod+Ctrl+Up resize shrink height 10 px or 5 ppt
+bindsym $mod+Ctrl+Right resize grow width 10 px or 5 ppt
+
+
+#  Настройки скрытия и появления bar
+bindsym $mod+m bar hidden_state toggle
+bindsym $mod+n bar mode toggle
+
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+
+bar {
+        id 0
+        status_command i3status -c $HOME/.config/i3/i3status.conf
+        position bottom
+        strip_workspace_numbers yes
+#        output DVI-I-1
+        tray_output primary
+        tray_padding 0
+        workspace_buttons yes
+        binding_mode_indicator yes
+        font pango:Terminus 12px
+#        mode hide
+#        hidden_state hide
+#        modifier Mod4
+
+        colors{
+            statusline #ffffff # цвет текста на статусах
+            background #000000 # фон
+            separator  #666666
+                               # граница | фон | цвет текста
+            focused_workspace  #4c7899 #285577 #ffffff
+            inactive_workspace #333333 #222222 #888888
+            active_workspace   #333333 #5f676a #ffffff
+            urgent_workspace   #2f343a #900000 #ffffff
+            binding_mode       #2f343a #900000 #ffffff
+        }
+}
+
+bar {
+        id 1
+        status_command i3status -c $HOME/.config/i3/i3status_vga.conf
+        position bottom
+        strip_workspace_numbers yes
+        output VGA-1
+        tray_output primary
+        tray_padding 0
+        workspace_buttons yes
+        binding_mode_indicator yes
+        font pango:Terminus 12px
+#        mode hide
+#        hidden_state hide
+#        modifier Mod4
+
+        colors{
+            statusline #ffffff # цвет текста на статусах
+            background #000000 # фон
+            separator  #666666
+                               # граница | фон | цвет текста
+            focused_workspace  #4c7899 #285577 #ffffff
+            inactive_workspace #333333 #222222 #888888
+            active_workspace   #333333 #5f676a #ffffff
+            urgent_workspace   #2f343a #900000 #ffffff
+            binding_mode       #2f343a #900000 #ffffff
+        }
+}
+
+#######################################################################
+# automatically start i3-config-wizard to offer the user to create a
+# keysym-based config which used their favorite modifier (alt or windows)
+#
+# i3-config-wizard will not launch if there already is a config file
+# in ~/.i3/config.
+#
+# Please remove the following exec line:
+#######################################################################
+exec --no-startup-id i3-config-wizard
