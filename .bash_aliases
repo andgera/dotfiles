@@ -28,6 +28,8 @@ alias ln='nocorrect ln'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
+alias vi='/bin/vim'
+alias ispell='ispell -d russian'
 
 ## Parenting changing permissions on root
 alias chown='chown --preserve-root '
