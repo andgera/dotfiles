@@ -101,7 +101,6 @@ autoload -U zcalc
 
 autoload -U colors
 colors
-
 #
 setopt menucomplete
 zstyle ':completion:*' menu select=2 _complete _ignored _approximate
@@ -181,6 +180,7 @@ fi
 
 if [ -f /usr/bin/grc ]; then
  alias gcc="grc --colour=auto gcc"
+ alias free="grc --color=auto free"
  alias ss="grc --colour=auto ss"
  alias nmap="grc --colour=auto nmap"
  alias netstat="grc --colour=auto netstat"
@@ -210,3 +210,6 @@ setopt pushdignoredups
 setopt pushdminus
 
 
+[[ -s "/usr/share/doc/fzf/examples/key-bindings.zsh" ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[[ -s "/usr/share/doc/fzf/examples/completion.zsh" ]] && source /usr/share/doc/fzf/examples/completion.zsh 
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
