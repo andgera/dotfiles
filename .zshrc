@@ -1,3 +1,9 @@
+# Starting X server for /dev/tty6
+if [ "$TTY" = "/dev/tty6" ]
+then
+        startx
+fi
+
 # start tmux
 case "$TERM" in
 	linux) tmux;;
@@ -13,6 +19,7 @@ stty ixoff -ixon
 
 #PS1='%F{red}%n%F{green}@%m%k %B%F{blue}%(4~|...|)%3~%F{white} %# %b%f%k'
 PS1='%F{yellow}job:%F{magenta}%j %F{green}%m%F{blue}@ %k%B%F{cyan}%(4~|...|)%3~%F{white} %# %b%f%k'
+RPROMPT="%F{white}[%F{yellow}%? %y%F{white}]"
 
 setopt histignorealldups sharehistory
 
@@ -59,7 +66,8 @@ fi
 ### Automatically open other known files:
 which mupdf >/dev/null && alias -s pdf="mupdf"
 which mupdf >/dev/null && alias -s ps="mupdf"
- 
+which zathura >/dev/null && alias -s djvu="zathura"
+
 # Automatic Typo Correction
 setopt correctall
 
@@ -74,10 +82,25 @@ bindkey -e
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_DUPS
+
+# Ctr+X Ctrl+Z, при вводе команды будет автоматически производится поиск
+# в истории по первым буквам команды. Нажатие Ctrl+Z
+# отключит этот режим.
+autoload -U predict-on
+zle -N predict-on
+zle -N predict-off
+bindkey "^X^Z" predict-on # C-x C-z
+bindkey "^Z" predict-off # C-z
 
 # Use modern completion system
 autoload -Uz compinit
 compinit
+
+autoload -U zcalc
+
+autoload -U colors
+colors
 
 #
 setopt menucomplete
@@ -110,6 +133,9 @@ export MANPATH
 #export MANPATH=$HOME/.man:/usr/share/man:/usr/local/man:/usr/local/share/man:/usr/X11R6/man:/opt/man
 export HELPDIR=/usr/share/zsh/help
 autoload -Uz run-help
+autoload run-help-git
+alias help=run-help
+
 export PAGER=most
 export USER_AGENT="Firefox/51.0 (Windows; U; Windows NT 5.1;ru-RU;rv:50.9.1.3) Gecko/51.0 Firefox/51.0 (.NET CLR 3.5.30729)"
 export EDITOR=vim
@@ -152,3 +178,35 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+if [ -f /usr/bin/grc ]; then
+ alias gcc="grc --colour=auto gcc"
+ alias ss="grc --colour=auto ss"
+ alias nmap="grc --colour=auto nmap"
+ alias netstat="grc --colour=auto netstat"
+ alias ping="grc --colour=auto ping"
+ alias lftp="grc --colour=auto lftp"
+ alias traceroute="grc --colour=auto traceroute"
+fi
+
+# Для вывода стека директорий cd -<NUM>
+
+DIRSTACKFILE="$HOME/.cache/zsh/dirs"
+
+[[ -d "$HOME/.cache/zsh" ]] || mkdir -p $HOME/.cache/zsh
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1]
+fi
+chpwd() {
+  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+}
+
+DIRSTACKSIZE=20
+setopt autopushd pushdsilent pushdtohome
+## Удалить повторяющиеся записи
+setopt pushdignoredups
+## Это Отменяет +/- операторы.
+setopt pushdminus
+
+
