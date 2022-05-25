@@ -161,6 +161,20 @@ endfunction
 
 map <F2> :call TranslateWord()<CR>
 
+execute pathogen#infect()
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
+let g:syntastic_c_checkers = ['gcc']
+let g:syntastic_cpp_checkers = ['gcc']
+
 " Выход
 map <C-F6> :q<CR>
 
@@ -238,7 +252,7 @@ set guioptions-=T
 set ch=2
 
 " Включить автоотступы
-"set autoindent
+set autoindent
 
 " Влючить подстветку синтаксиса
 syntax on
@@ -247,7 +261,7 @@ syntax on
 set backspace=indent,eol,start whichwrap+=<,>,[,]
 
 " Преобразование Таба в пробелы
-set expandtab
+"set expandtab
 
 "" Формат строки состояния
  " fileformat - формат файла (unix, dos); fileencoding - кодировка файла;
@@ -386,6 +400,24 @@ call neomake#configure#automake('rw', 1000)
 
 " для печати русскими буквами из редактора по hardcopy
 set printencoding=koi8-r
+
+" поддержка ctags
+set tags=./tags,tags;$HOME
+
+command! MarkdownPreview !python3 -m markdown % -f ~/tmp/t.html &&
+ \ lynx ~/tmp/t.html
+command! MarkdownUpdate !python3 -m markdown % -f ~/tmp/t.html
+
+set colorcolumn=80
+au BufRead *.md set wrap tw=80
+if exists('+colorcolumn')
+    highlight ColorColumn ctermbg=235 guibg=#2c2d27
+    highlight CursorLine ctermbg=235 guibg=#2c2d27
+    highlight CursorColumn ctermbg=235 guibg=#2c2d27
+    let &colorcolumn=join(range(81,999),",")
+else
+    autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+end
 
 " шаблоны файлов по расширению
 autocmd BufNewFile * silent! 0r $HOME/.vim/templates/templates.%:e

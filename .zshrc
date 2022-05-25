@@ -93,6 +93,15 @@ zle -N predict-off
 bindkey "^X^Z" predict-on # C-x C-z
 bindkey "^Z" predict-off # C-z
 
+# Перемещение в меню
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+# CTRL+x i
+bindkey -M menuselect '^xi' vi-insert
+
 # Use modern completion system
 autoload -Uz compinit
 compinit
@@ -108,6 +117,7 @@ zstyle ':completion:*' menu select=2 _complete _ignored _approximate
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
 zstyle ':completion:*' group-name ''
 #zstyle ':completion:*' menu select=2
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
@@ -209,7 +219,7 @@ setopt pushdignoredups
 ## Это Отменяет +/- операторы.
 setopt pushdminus
 
-
-[[ -s "/usr/share/doc/fzf/examples/key-bindings.zsh" ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-[[ -s "/usr/share/doc/fzf/examples/completion.zsh" ]] && source /usr/share/doc/fzf/examples/completion.zsh 
-[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
+if [ -x $(command -v fzf) ] ; then
+        source /usr/share/doc/fzf/examples/completion.zsh
+        source /usr/share/doc/fzf/examples/key-bindings.zsh
+fi
