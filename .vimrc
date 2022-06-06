@@ -146,7 +146,7 @@ nmap <F4> :w!<CR>:!aspell -e -c -d ru %<CR>:e! %<CR>
 set pastetoggle=<F7>
 
 "Подсветка текущей строки
-" set cursorline
+"set cursorline
 
 " Перевод
 function! TranslateWord()
@@ -297,8 +297,9 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`
 
 " Копирование в буфер обмена иксов
 set clipboard=unnamed,exclude:cons\\\|linux
-" set langmap=ё!"№;%:?*()_+/йцукенгшщзхъфывапролджэячсмитьбю.ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,;`!@#$%^&*()_+|qwertyuiop[]asdfghjkl;'zxcvbnm,./;~QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?
- set langmap=ё1"№;%:?*()_+/йцукенгшщзхъфывапролджэячсмитьбю.ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,`!@#$%^&*()_+|qwertyuiop[]asdfghjkl;'zxcvbnm,./~	QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?
+" set clipboard=unnamedplus
+
+set langmap=ё1"№;%:?*()_+/йцукенгшщзхъфывапролджэячсмитьбю.ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,`!@#$%^&*()_+|qwertyuiop[]asdfghjkl;'zxcvbnm,./~	QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?
 set helplang=ru
 
 " Tell the GnuPG plugin to armor new files.
@@ -418,6 +419,10 @@ if exists('+colorcolumn')
 else
     autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 end
+
+" Поддержка бесконечных отмен по U
+set undodir=$HOME/.vim/cache/
+set undofile
 
 " шаблоны файлов по расширению
 autocmd BufNewFile * silent! 0r $HOME/.vim/templates/templates.%:e
