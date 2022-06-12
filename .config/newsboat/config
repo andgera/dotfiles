@@ -6,6 +6,8 @@ article-sort-order desc
 articlelist-format "%4i %f %D %6L  %?T?|%-17T|  ?%t"
 auto-reload yes
 browser lynx
+#html-renderer "w3m -dump -T text/html"
+notify-screen yes
 bookmark-cmd "~/bin/bookmark-scuttle.sh"
 datetime-format "%a %d %b"
 feed-sort-order title-dec
@@ -20,6 +22,7 @@ search-highlight-colors black yellow bold
 show-keymap-hint yes
 show-read-feeds no
 show-read-articles no
+download-full-page yes
 text-width 82
 ignore-article "*" "title =~ \"Sponsor\""
 ignore-article "*" "title =~ \"Advertisement\""
@@ -57,4 +60,8 @@ bind-key k up
 bind-key l open
 bind-key h quit
 
+bind-key i toggle-show-read-feeds
 # EOF
+download-path "~/Downloads/"
+download-filename-format "%F-%t-%H%M.%e"
+player mpv

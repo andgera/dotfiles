@@ -93,26 +93,9 @@ set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
 
-"noremap  <S-Tab> :let &iminsert = ! &iminsert<CR>
-"inoremap <S-Tab> <C-^>
-"noremap! <S-Tab> <C-^>
-
-function! MyKeyMapHighlight()
-    if &iminsert == 0 " при английской раскладке статусная строка текущего окна будет серого цвета
-       hi StatusLine ctermfg=DarkBlue guifg=DarkBlue
-    else " а при русской - зеленого.
-       hi StatusLine ctermfg=DarkRed guifg=DarkRed
-    endif
- endfunction
- call MyKeyMapHighlight() " при старте Vim устанавливать цвет статусной строки
- autocmd WinEnter * :call MyKeyMapHighlight() " при смене окна обновлять информацию о раскладках
-
- " использовать Ctrl-F для переключения раскладок
- cmap <silent> <C-F> <C-^>
- imap <silent> <C-F> <C-^>X<Esc>:call MyKeyMapHighlight()<CR>a<C-H>
- nmap <silent> <C-F> a<C-^><Esc>:call MyKeyMapHighlight()<CR>
- vmap <silent> <C-F> <Esc>a<C-^><Esc>:call MyKeyMapHighlight()<CR>gv
-
+noremap  <S-Tab> :let &iminsert = ! &iminsert<CR>
+inoremap <S-Tab> <C-^>
+noremap! <S-Tab> <C-^>
 
 "Всегда показывать у курсора n строк и n столбцов
 set scrolloff=2
@@ -122,7 +105,7 @@ set sidescrolloff=2
 set listchars=tab:>-,trail:_,precedes:<,extends:>
 
 "Переносить после n символов
-"set textwidth=78
+set textwidth=78
 
 "Переносить целые слова
 set linebreak
@@ -297,8 +280,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`
 
 " Копирование в буфер обмена иксов
 set clipboard=unnamed,exclude:cons\\\|linux
-" set langmap=ё!"№;%:?*()_+/йцукенгшщзхъфывапролджэячсмитьбю.ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,;`!@#$%^&*()_+|qwertyuiop[]asdfghjkl;'zxcvbnm,./;~QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?
- set langmap=ё1"№;%:?*()_+/йцукенгшщзхъфывапролджэячсмитьбю.ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,`!@#$%^&*()_+|qwertyuiop[]asdfghjkl;'zxcvbnm,./~	QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?
+
 set helplang=ru
 
 " Tell the GnuPG plugin to armor new files.
@@ -418,6 +400,15 @@ if exists('+colorcolumn')
 else
     autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 end
+
+" Поддержка отмен
+silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
+set backup
+set backupdir=~/.cache/vim/backup/
+set swapfile
+set directory=~/.cache/vim/swap/
+set undofile
+set undodir=~/.cache/vim/undo/
 
 " шаблоны файлов по расширению
 autocmd BufNewFile * silent! 0r $HOME/.vim/templates/templates.%:e
