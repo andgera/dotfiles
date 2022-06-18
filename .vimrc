@@ -84,6 +84,12 @@ if version >= 700
     map <F10> <Esc>:call ChangeSpellLang()<CR>
 endif
 
+" автоматическая проверка орфографии в файлах ниже
+" z= отобразить список замен, zg добавить слово в список корректных слов
+autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd BufRead,BufNewFile *.txt setlocal spell
+autocmd FileType gitcommit setlocal spell
+
 :menu Tools.Bo&x\ Draw :so ~/.vim/boxdraw.vim<CR>
 
 "Устанавливаем русскую раскладку
