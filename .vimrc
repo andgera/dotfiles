@@ -10,7 +10,7 @@ colorscheme koehler
 filetype plugin indent on
 
 " установка клавиши лидер
-let mapleader=","
+let mapleader="'"
 
 " Список кодировок файлов для автоопределения
 set fileencodings=utf-8,cp1251,koi8-r,cp866
@@ -94,14 +94,31 @@ autocmd FileType gitcommit setlocal spell
 
 "Устанавливаем русскую раскладку
 set keymap=russian-jcukenwin
+set iskeyword=@,48-57,_,192-255
 
 "Настройка переключения раскладки
 set iminsert=0
 set imsearch=0
+"noremap  <S-Tab> :let &iminsert = ! &iminsert<CR>
+"inoremap <S-Tab> <C-^>
+"noremap! <S-Tab> <C-^>
 
-noremap  <S-Tab> :let &iminsert = ! &iminsert<CR>
-inoremap <S-Tab> <C-^>
-noremap! <S-Tab> <C-^>
+
+function! MyKeyMapHighlight()
+   if &iminsert == 0 " при английской раскладке статусная строка текущего окна будет серого цвета
+      hi StatusLine ctermfg=DarkBlue guifg=DarkBlue
+   else " а при русской - зеленого.
+      hi StatusLine ctermfg=DarkRed guifg=DarkRed
+   endif
+endfunction
+call MyKeyMapHighlight() " при старте Vim устанавливать цвет статусной строки
+autocmd WinEnter * :call MyKeyMapHighlight() " при смене окна обновлять информацию о раскладках
+
+" использовать Ctrl-F для переключения раскладок
+cmap <silent> <S-Tab> <C-^>
+imap <silent> <S-Tab> <C-^>X<Esc>:call MyKeyMapHighlight()<CR>a<C-H>
+nmap <silent> <S-Tab> a<C-^><Esc>:call MyKeyMapHighlight()<CR>
+vmap <silent> <S-Tab> <Esc>a<C-^><Esc>:call MyKeyMapHighlight()<CR>gv
 
 "Всегда показывать у курсора n строк и n столбцов
 set scrolloff=2
@@ -111,7 +128,7 @@ set sidescrolloff=2
 set listchars=tab:>-,trail:_,precedes:<,extends:>
 
 "Переносить после n символов
-set textwidth=78
+"set textwidth=78
 
 "Переносить целые слова
 set linebreak
@@ -135,7 +152,7 @@ nmap <F4> :w!<CR>:!aspell -e -c -d ru %<CR>:e! %<CR>
 set pastetoggle=<F7>
 
 "Подсветка текущей строки
-" set cursorline
+"set cursorline
 
 " Перевод
 function! TranslateWord()
@@ -286,6 +303,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`
 
 " Копирование в буфер обмена иксов
 set clipboard=unnamed,exclude:cons\\\|linux
+" set clipboard=unnamedplus
 
 set helplang=ru
 
@@ -371,26 +389,31 @@ nnoremap <silent> <C-n> :call ChangeBuf(":bn")<CR>
 nnoremap <silent> <C-p> :call ChangeBuf(":bp")<CR>
 
 call plug#begin('~/.vim/plugged')
-Plug 'pearofducks/ansible-vim'
-" install and use neomake linting
-Plug 'neomake/neomake'
 " install and use vim-markdown
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+" install and use vim-notes
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
 call plug#end()
 
-" When writing a buffer.
-call neomake#configure#automake('w')
-" When writing a buffer, and on normal mode changes (after 750ms).
-call neomake#configure#automake('nw', 750)
-" When reading a buffer (after 1s), and when writing.
-call neomake#configure#automake('rw', 1000)
+" configure vim-notes
+:let g:notes_directories = ['~/Nextcloud/Documents/markor/Notes']
+:let g:notes_suffix = '.md'
+:let g:notes_title_sync = 'change_title'
+" :let g:notes_markdown_program = 'python3 -m markdown % -f '
+" show formating
+:let g:notes_conceal_code = '0'
+:let g:notes_conceal_italic = '0'
+:let g:notes_conceal_bold = '0'
+:let g:notes_conceal_url = '0'
 
 " для печати русскими буквами из редактора по hardcopy
 set printencoding=koi8-r
 
 " поддержка ctags
 set tags=./tags,tags;$HOME
+set tags+=~/.vim/systags
 
 command! MarkdownPreview !python3 -m markdown % -f ~/tmp/t.html &&
  \ lynx ~/tmp/t.html
@@ -406,7 +429,6 @@ if exists('+colorcolumn')
 else
     autocmd BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 end
-
 " Поддержка отмен
 silent !mkdir -p $HOME/.cache/vim/{backup,swap,undo}
 set backup
@@ -418,3 +440,6 @@ set undodir=~/.cache/vim/undo/
 
 " шаблоны файлов по расширению
 autocmd BufNewFile * silent! 0r $HOME/.vim/templates/templates.%:e
+
+" Python
+autocmd BufNewFile,BufRead *.py compiler python
